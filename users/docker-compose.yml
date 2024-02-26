@@ -1,0 +1,13 @@
+version: '3'
+services:
+  db:
+    image: postgres:14
+    environment:
+      - POSTGRES_USER=alexiakattah
+      - POSTGRES_PASSWORD=root
+      - POSTGRES_DB=users
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+
+volumes:
+  pgdata:
