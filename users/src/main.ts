@@ -1,9 +1,6 @@
-import ExpressAdapter from './infra/http/express';
-import swagger from './infra/swagger';
+import { ExpressAdapter } from './infra/http/express';
 
+console.log('Server is starting...');
 const httpServer = new ExpressAdapter();
-const PORT = 3333 || process.env.PORT;
-
-swagger(httpServer.app);
-
-httpServer.listen(PORT, () => console.log(`Server running at ${PORT}`));
+const port = (process.env.PORT as unknown as number) || 3000;
+httpServer.listen(port);
