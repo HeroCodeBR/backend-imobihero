@@ -1,4 +1,5 @@
 import { HttpRequest, HttpResponse } from '@/infra/http/httpAdapter';
+import { errorMiddleware } from '@/infra/middlewares/error.middleware';
 import { Request, Response } from 'express';
 
 export const adapterRoutes = (controller: any, method: any) => {
@@ -9,12 +10,12 @@ export const adapterRoutes = (controller: any, method: any) => {
       query: req.query,
       headers: req.headers,
     };
-    const httpReponse: HttpResponse = await controller[method](httpRequest);
+    const httpReponse = await controller[method](httpRequest);
 
     if (httpReponse.status >= 200 && httpReponse.status <= 299) {
       res.status(httpReponse.status).json(httpReponse.message);
     } else {
-      res.status(httpReponse.status).json({ error: httpReponse.message });
+      errorMiddleware(httpReponse, req, res);
     }
   };
 };

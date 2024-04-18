@@ -1,34 +1,23 @@
 import { HttpRequest, HttpResponse } from '@/infra/http/httpAdapter';
 import { UserUseCase } from '../usecases/user.usecase';
 import { CreateUserDto } from '@/domain/dtos/user.dto';
+import { HttpError } from '../errors/httpError';
 
 export class UserController {
   constructor(private readonly userUseCase: UserUseCase) {}
-  getUsers(httpRequest: HttpRequest): HttpResponse {
-    try {
-      const { id } = httpRequest.query;
-      const response = this.userUseCase.getUsers();
 
-      return {
-        status: 200,
-        message: response,
-      };
-    } catch (error) {
-      return {
-        status: 500,
-        message: 'Internal server error',
-      };
-    }
-  }
-  create(httpRequest: HttpRequest): HttpResponse {
+  async create(httpRequest: HttpRequest): Promise<HttpResponse> {
     const createUserDto: CreateUserDto = httpRequest.body;
+    console.log('🚀 ~ UserController ~ create ~ createUserDto:', createUserDto);
     try {
-      const response = this.userUseCase.create(createUserDto);
+      const response = await this.userUseCase.create(createUserDto);
       return {
         status: 201,
-        message: response,
+        message: 'User created successfully!',
+        data: response,
       };
-    } catch (error) {
+    } catch (error: any) {
+      console.log('🚀 ~ UserController ~ create ~ error:', error);
       return {
         status: error.status,
         message: error.message,

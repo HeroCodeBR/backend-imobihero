@@ -7,5 +7,5 @@ import { makeUserFactory } from '../factories/user.factory';
 export const UserRoutes = (router: Router): void => {
   const usersController = new UserController(makeUserFactory());
   const prefix = '/users';
-  router.get(prefix + '', adapterRoutes(usersController, 'getUsers'));
+  router.post(prefix + '', adapterRoutes(usersController, 'create'));
 };
