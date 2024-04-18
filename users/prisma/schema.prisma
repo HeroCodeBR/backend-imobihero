@@ -11,11 +11,35 @@ datasource db {
 }
 
 model User {
+  id                   String                 @id @default(uuid())
+  name                 String
+  email                String                 @unique
+  password             String
+  created_at           DateTime               @default(now())
+  updated_at           DateTime               @updatedAt
+  deleted_at           DateTime?              @db.Date
+  permission_id        String
+  Permission           Permissions            @relation(fields: [permission_id], references: [id])
+  PasswordResetRequest PasswordResetRequest[]
+}
+
+model PasswordResetRequest {
+  id           String   @id @default(uuid())
+  token        String
+  user_id      String
+  status       String
+  expires_at   DateTime
+  created_at   DateTime @default(now())
+  callback_url String
+  User         User     @relation(fields: [user_id], references: [id])
+}
+
+model Permissions {
   id         String    @id @default(uuid())
-  name       String
-  email      String    @unique
-  password   String
+  key        String
+  title      String
   created_at DateTime  @default(now())
   updated_at DateTime  @updatedAt
   deleted_at DateTime? @db.Date
+  User       User[]
 }
