@@ -13,7 +13,7 @@ export const adapterRoutes = (controller: any, method: any) => {
     const httpReponse = await controller[method](httpRequest);
 
     if (httpReponse.status >= 200 && httpReponse.status <= 299) {
-      res.status(httpReponse.status).json(httpReponse.message);
+      res.status(httpReponse.status).json(httpReponse);
     } else {
       errorMiddleware(httpReponse, req, res);
     }
