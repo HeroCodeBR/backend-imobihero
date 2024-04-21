@@ -1,5 +1,8 @@
 import { Permission } from '@/domain/entities/permission.entity';
-import { CreatePermissionDto } from '@/domain/dtos/permission.dto';
+import {
+  CreatePermissionDto,
+  UpdatePermissionDto,
+} from '@/domain/dtos/permission.dto';
 import { PermissionRepository } from '../repositories/permission.repository';
 import { HttpError } from '../errors/httpError';
 
@@ -26,6 +29,46 @@ class PermissionUseCase {
     if (permission) throw new HttpError(400, 'Permission already exists');
 
     const result = await this.permissionRepository.create(createPermissionDto);
+    return result;
+  }
+  async update(id: string, updatePermissionDto: UpdatePermissionDto) {
+    const verifyIfExistsPermission = await this.permissionRepository.findByKey(
+      id,
+    );
+    if (!verifyIfExistsPermission)
+      throw new HttpError(400, 'Permission not found');
+
+    const result = await this.permissionRepository.update(
+      verifyIfExistsPermission.id,
+      updatePermissionDto,
+    );
+
+    return result;
+  }
+
+  async delete(key: string) {
+    const verifyIfExistsPermission = await this.permissionRepository.findByKey(
+      key,
+    );
+    if (!verifyIfExistsPermission)
+      throw new HttpError(400, 'Permission not found');
+
+    if (verifyIfExistsPermission.deleted_at !== null)
+      throw new HttpError(400, 'Permission not found');
+
+    const result = await this.permissionRepository.delete(
+      verifyIfExistsPermission.id,
+    );
+    return result;
+  }
+  async show(key: string) {
+    const result = await this.permissionRepository.findByKey(key);
+
+    if (!result) throw new HttpError(400, 'Permission not found');
+
+    if (result.deleted_at !== null)
+      throw new HttpError(400, 'Permission not found');
+
     return result;
   }
 }

@@ -41,8 +41,21 @@ class PermissionRepositoryPrisma implements PermissionRepository {
       },
       data: {
         ...createPermissionDto,
+        updated_at: new Date(),
       },
     });
+    return result;
+  }
+  async delete(id: string) {
+    const result = await this.prisma.permissions.update({
+      where: {
+        id,
+      },
+      data: {
+        deleted_at: new Date(),
+      },
+    });
+
     return result;
   }
 }
