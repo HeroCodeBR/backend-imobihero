@@ -15,8 +15,42 @@ class UsersRepositoryPrisma implements UsersRepository {
         ...createUserDto,
       },
     });
-    console.log('🚀 ~ UsersRepositoryPrisma ~ create ~ result:', result);
     return result;
+  }
+  async findAllusers(key: string): Promise<User[]> {
+    const result = await this.prisma.user.findMany({
+      where: {
+        deleted_at: null,
+        Permission: {
+          key,
+        },
+      },
+    });
+    return result;
+  }
+  async update(id: string, updateUserDto: CreateUserDto): Promise<User> {
+    const result = await this.prisma.user.update({
+      where: {
+        id,
+      },
+      data: {
+        ...updateUserDto,
+        updated_at: new Date(),
+      },
+    });
+    return result;
+  }
+
+  async delete(id: string): Promise<boolean> {
+    const result = await this.prisma.user.update({
+      where: {
+        id,
+      },
+      data: {
+        deleted_at: new Date(),
+      },
+    });
+    return result.deleted_at !== null;
   }
 }
 

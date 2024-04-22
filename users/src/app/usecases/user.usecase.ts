@@ -9,6 +9,18 @@ class UserUseCase {
     const result = await this.userRepository.create(createUserDto);
     return result;
   }
+  public async findAllusers(key: string): Promise<User[]> {
+    const result = await this.userRepository.findAllusers(key);
+    return result;
+  }
+  public async update(id: string, updateUserDto: CreateUserDto): Promise<User> {
+    const result = await this.userRepository.update(id, updateUserDto);
+    return result;
+  }
+  public async delete(id: string): Promise<boolean> {
+    const result = await this.userRepository.delete(id);
+    return result;
+  }
 }
 
 export { UserUseCase };

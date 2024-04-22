@@ -1,8 +1,5 @@
 import { PrismaClient } from '@prisma/client';
 import { prisma } from '../prisma';
-import { CreateUserDto } from '@/domain/dtos/user.dto';
-import { UsersRepository } from '@/app/repositories/user.repository';
-import { User } from '@/domain/entities/user.entity';
 import { PermissionRepository } from '@/app/repositories/permission.repository';
 import { Permission } from '@/domain/entities/permission.entity';
 import { CreatePermissionDto } from '@/domain/dtos/permission.dto';

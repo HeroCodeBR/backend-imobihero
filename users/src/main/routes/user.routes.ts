@@ -8,4 +8,7 @@ export const UserRoutes = (router: Router): void => {
   const usersController = new UserController(makeUserFactory());
   const prefix = '/users';
   router.post(prefix + '', adapterRoutes(usersController, 'create'));
+  router.get(prefix + '/:key', adapterRoutes(usersController, 'findAll'));
+  router.put(prefix + '/:id', adapterRoutes(usersController, 'update'));
+  router.delete(prefix + '/:id', adapterRoutes(usersController, 'delete'));
 };

@@ -26,7 +26,8 @@ class PermissionUseCase {
       createPermissionDto.key,
     );
 
-    if (permission) throw new HttpError(400, 'Permission already exists');
+    if (permission && permission.deleted_at === null)
+      throw new HttpError(400, 'Permission already exists');
 
     const result = await this.permissionRepository.create(createPermissionDto);
     return result;
