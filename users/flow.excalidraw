@@ -43,8 +43,8 @@
     },
     {
       "type": "text",
-      "version": 9,
-      "versionNonce": 223351005,
+      "version": 10,
+      "versionNonce": 226364965,
       "isDeleted": false,
       "id": "vhWInrJZ9NsiCocLCDN_n",
       "fillStyle": "solid",
@@ -57,14 +57,14 @@
       "y": 219,
       "strokeColor": "#1e1e1e",
       "backgroundColor": "transparent",
-      "width": 55.53993225097656,
+      "width": 55.539947509765625,
       "height": 25,
       "seed": 751463957,
       "groupIds": [],
       "frameId": null,
       "roundness": null,
       "boundElements": [],
-      "updated": 1713709787473,
+      "updated": 1727554531107,
       "link": null,
       "locked": false,
       "fontSize": 20,
@@ -75,7 +75,7 @@
       "containerId": null,
       "originalText": "Users",
       "lineHeight": 1.25,
-      "baseline": 17
+      "baseline": 18
     },
     {
       "type": "rectangle",
@@ -108,8 +108,8 @@
     },
     {
       "type": "text",
-      "version": 29,
-      "versionNonce": 1008449395,
+      "version": 30,
+      "versionNonce": 466424491,
       "isDeleted": false,
       "id": "ZM1gBK08nQl45Gfl3T3BE",
       "fillStyle": "solid",
@@ -122,14 +122,14 @@
       "y": 421.44433584852277,
       "strokeColor": "#1e1e1e",
       "backgroundColor": "transparent",
-      "width": 129.57986450195312,
+      "width": 129.57989501953125,
       "height": 25,
       "seed": 1139302011,
       "groupIds": [],
       "frameId": null,
       "roundness": null,
       "boundElements": [],
-      "updated": 1713709787474,
+      "updated": 1727554531107,
       "link": null,
       "locked": false,
       "fontSize": 20,
@@ -140,7 +140,7 @@
       "containerId": null,
       "originalText": "Autenticação",
       "lineHeight": 1.25,
-      "baseline": 17
+      "baseline": 18
     },
     {
       "type": "rectangle",
@@ -178,8 +178,8 @@
     },
     {
       "type": "text",
-      "version": 26,
-      "versionNonce": 1682549781,
+      "version": 27,
+      "versionNonce": 1538925637,
       "isDeleted": false,
       "id": "U0slzaGRLQ6g8W8tKseqV",
       "fillStyle": "solid",
@@ -199,7 +199,7 @@
       "frameId": null,
       "roundness": null,
       "boundElements": [],
-      "updated": 1713478441755,
+      "updated": 1727554535715,
       "link": null,
       "locked": false,
       "fontSize": 20,
@@ -210,7 +210,7 @@
       "containerId": "dyppdRTIz98cyZOJqkgWT",
       "originalText": "Permissões",
       "lineHeight": 1.25,
-      "baseline": 19
+      "baseline": 18
     },
     {
       "type": "arrow",
