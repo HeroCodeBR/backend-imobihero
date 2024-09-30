@@ -1,13 +1,20 @@
+import { UsersRepository } from '@/app/repositories/user.repository';
+import { CreateUserDto } from '@/domain/dtos/user.dto';
+import { User } from '@/domain/entities/user.entity';
 import { PrismaClient } from '@prisma/client';
 import { prisma } from '../prisma';
-import { CreateUserDto } from '@/domain/dtos/user.dto';
-import { UsersRepository } from '@/app/repositories/user.repository';
-import { User } from '@/domain/entities/user.entity';
 
 class UsersRepositoryPrisma implements UsersRepository {
   prisma: PrismaClient;
   constructor() {
     this.prisma = prisma;
+  }
+  findUserByEmail(email: string): Promise<User | null> {
+    return this.prisma.user.findFirst({
+      where: {
+        email,
+      },
+    });
   }
   async create(createUserDto: CreateUserDto): Promise<User> {
     const result = await this.prisma.user.create({

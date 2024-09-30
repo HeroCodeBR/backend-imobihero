@@ -1,7 +1,6 @@
+import { CreateUserDto } from '@/domain/dtos/user.dto';
 import { HttpRequest, HttpResponse } from '@/infra/http/httpAdapter';
 import { UserUseCase } from '../usecases/user.usecase';
-import { CreateUserDto } from '@/domain/dtos/user.dto';
-import { HttpError } from '../errors/httpError';
 
 export class UserController {
   constructor(private readonly userUseCase: UserUseCase) {}
@@ -64,6 +63,22 @@ export class UserController {
       return {
         status: 200,
         message: 'User deleted successfully!',
+        data: response,
+      };
+    } catch (error: any) {
+      return {
+        status: error.status,
+        message: error.message,
+      };
+    }
+  }
+  async auth(httpRequest: HttpRequest): Promise<HttpResponse> {
+    const { email, password } = httpRequest.body;
+    try {
+      const response = await this.userUseCase.auth(email, password);
+      return {
+        status: 200,
+        message: 'User authenticated successfully!',
         data: response,
       };
     } catch (error: any) {
