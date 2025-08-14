@@ -110,14 +110,16 @@ class RealEstateMicroservicesTest:
         
         # Test list all properties
         success, data, status = self.make_request('GET', f"{self.properties_base_url}/properties")
-        properties_count = len(data.get('data', [])) if success else 0
+        properties_count = 0
+        if success and data.get('data') and data['data'].get('properties'):
+            properties_count = len(data['data']['properties'])
         self.log_test("List All Properties", success and status == 200, 
                      f"(Status: {status}, Count: {properties_count})")
         
         # Store first property ID for further testing
         first_property_id = None
-        if success and data.get('data') and isinstance(data['data'], list) and len(data['data']) > 0:
-            first_property_id = data['data'][0].get('id')
+        if success and data.get('data') and data['data'].get('properties') and len(data['data']['properties']) > 0:
+            first_property_id = data['data']['properties'][0].get('id')
         
         # Test get property by ID
         if first_property_id:
