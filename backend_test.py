@@ -179,7 +179,9 @@ class RealEstateMicroservicesTest:
         for corretor_id in self.test_corretor_ids:
             success, data, status = self.make_request('GET', 
                 f"{self.properties_base_url}/corretor/{corretor_id}/contacts")
-            contacts_count = len(data.get('data', [])) if success else 0
+            contacts_count = 0
+            if success and data.get('data') and isinstance(data['data'], list):
+                contacts_count = len(data['data'])
             self.log_test(f"Contacts by Broker {corretor_id[-4:]}", success and status == 200, 
                          f"(Status: {status}, Contacts: {contacts_count})")
 
