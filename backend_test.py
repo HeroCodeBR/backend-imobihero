@@ -139,7 +139,9 @@ class RealEstateMicroservicesTest:
             success, data, status = self.make_request('GET', 
                 f"{self.properties_base_url}/properties{filter_param}")
             filter_name = filter_param.replace('?', '').replace('&', ' & ')
-            results_count = len(data.get('data', [])) if success else 0
+            results_count = 0
+            if success and data.get('data') and data['data'].get('properties'):
+                results_count = len(data['data']['properties'])
             self.log_test(f"Filter Properties ({filter_name})", success and status == 200, 
                          f"(Status: {status}, Results: {results_count})")
         
