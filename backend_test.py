@@ -116,7 +116,7 @@ class RealEstateMicroservicesTest:
         
         # Store first property ID for further testing
         first_property_id = None
-        if success and data.get('data') and len(data['data']) > 0:
+        if success and data.get('data') and isinstance(data['data'], list) and len(data['data']) > 0:
             first_property_id = data['data'][0].get('id')
         
         # Test get property by ID
