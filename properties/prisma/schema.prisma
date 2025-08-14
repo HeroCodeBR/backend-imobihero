@@ -1,0 +1,101 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Property {
+  id              String             @id @default(uuid())
+  title           String
+  description     String
+  price           Decimal
+  property_type   PropertyTypeEnum
+  address         String
+  city            String
+  state           String
+  zip_code        String?
+  bedrooms        Int?
+  bathrooms       Int?
+  area            Float?             // area in square meters
+  garage_spots    Int?
+  status          PropertyStatusEnum @default(AVAILABLE)
+  corretor_id     String             // ID do corretor (vem do microserviço de usuários)
+  created_at      DateTime           @default(now())
+  updated_at      DateTime           @updatedAt
+  deleted_at      DateTime?          @db.Date
+  PropertyImage   PropertyImage[]
+  PropertyContact PropertyContact[]
+  PropertyFavorite PropertyFavorite[]
+  PropertyView    PropertyView[]
+}
+
+model PropertyImage {
+  id          String   @id @default(uuid())
+  property_id String
+  image_url   String
+  is_main     Boolean  @default(false)
+  created_at  DateTime @default(now())
+  Property    Property @relation(fields: [property_id], references: [id], onDelete: Cascade)
+}
+
+model PropertyContact {
+  id          String               @id @default(uuid())
+  property_id String
+  client_name String
+  client_email String
+  client_phone String?
+  message     String
+  status      ContactStatusEnum    @default(PENDING)
+  created_at  DateTime             @default(now())
+  updated_at  DateTime             @updatedAt
+  Property    Property             @relation(fields: [property_id], references: [id], onDelete: Cascade)
+}
+
+model PropertyFavorite {
+  id          String   @id @default(uuid())
+  property_id String
+  user_id     String   // ID do usuário (vem do microserviço de usuários)
+  created_at  DateTime @default(now())
+  Property    Property @relation(fields: [property_id], references: [id], onDelete: Cascade)
+  
+  @@unique([property_id, user_id])
+}
+
+model PropertyView {
+  id          String   @id @default(uuid())
+  property_id String
+  user_id     String?  // Pode ser null para visitantes não logados
+  ip_address  String?
+  user_agent  String?
+  viewed_at   DateTime @default(now())
+  Property    Property @relation(fields: [property_id], references: [id], onDelete: Cascade)
+}
+
+enum PropertyTypeEnum {
+  APARTMENT
+  HOUSE
+  CONDO
+  LAND
+  COMMERCIAL
+  FARM
+}
+
+enum PropertyStatusEnum {
+  AVAILABLE
+  SOLD
+  RENTED
+  RESERVED
+}
+
+enum ContactStatusEnum {
+  PENDING
+  CONTACTED
+  SCHEDULED
+  CLOSED
+}
