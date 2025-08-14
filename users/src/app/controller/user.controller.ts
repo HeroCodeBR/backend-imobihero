@@ -88,4 +88,38 @@ export class UserController {
       };
     }
   }
+
+  async findById(httpRequest: HttpRequest): Promise<HttpResponse> {
+    const { id } = httpRequest.params;
+    try {
+      const response = await this.userUseCase.findById(id);
+      return {
+        status: 200,
+        message: 'User found successfully!',
+        data: response,
+      };
+    } catch (error: any) {
+      return {
+        status: error.status || 404,
+        message: error.message,
+      };
+    }
+  }
+
+  async validateCorretor(httpRequest: HttpRequest): Promise<HttpResponse> {
+    const { corretor_id } = httpRequest.params;
+    try {
+      const response = await this.userUseCase.validateCorretor(corretor_id);
+      return {
+        status: 200,
+        message: 'Corretor validated successfully!',
+        data: response,
+      };
+    } catch (error: any) {
+      return {
+        status: error.status || 404,
+        message: error.message,
+      };
+    }
+  }
 }
