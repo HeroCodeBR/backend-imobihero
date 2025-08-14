@@ -9,21 +9,58 @@ class UsersRepositoryPrisma implements UsersRepository {
   constructor() {
     this.prisma = prisma;
   }
+  
   findUserByEmail(email: string): Promise<User | null> {
     return this.prisma.user.findFirst({
       where: {
         email,
+        deleted_at: null
       },
+      include: {
+        Permission: true
+      }
     });
   }
+
+  async findById(id: string): Promise<User | null> {
+    return this.prisma.user.findUnique({
+      where: {
+        id,
+        deleted_at: null
+      },
+      include: {
+        Permission: true
+      }
+    });
+  }
+
+  async findCorretorById(corretor_id: string): Promise<User | null> {
+    return this.prisma.user.findFirst({
+      where: {
+        id: corretor_id,
+        deleted_at: null,
+        Permission: {
+          key: 'CORRETOR'
+        }
+      },
+      include: {
+        Permission: true
+      }
+    });
+  }
+  
   async create(createUserDto: CreateUserDto): Promise<User> {
     const result = await this.prisma.user.create({
       data: {
         ...createUserDto,
       },
+      include: {
+        Permission: true
+      }
     });
     return result;
   }
+  
   async findAllusers(key: string): Promise<User[]> {
     const result = await this.prisma.user.findMany({
       where: {
@@ -32,9 +69,13 @@ class UsersRepositoryPrisma implements UsersRepository {
           key,
         },
       },
+      include: {
+        Permission: true
+      }
     });
     return result;
   }
+  
   async update(id: string, updateUserDto: CreateUserDto): Promise<User> {
     const result = await this.prisma.user.update({
       where: {
@@ -44,6 +85,9 @@ class UsersRepositoryPrisma implements UsersRepository {
         ...updateUserDto,
         updated_at: new Date(),
       },
+      include: {
+        Permission: true
+      }
     });
     return result;
   }
