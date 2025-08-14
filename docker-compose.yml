@@ -58,7 +58,7 @@ services:
       - db-users
       - kafka
     environment:
-      - DATABASE_URL=postgresql://alexiakattah:root@db-users:5432/users
+      - DATABASE_URL="postgresql://alexiakattah:root@localhost:5432/users?schema=public"
       - KAFKA_BROKERS=kafka:9092
     restart: ${DOCKER_RESTART_POLICY:-unless-stopped}
 
